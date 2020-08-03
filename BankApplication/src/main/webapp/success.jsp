@@ -5,9 +5,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Success</title>
+<link rel="stylesheet" href="bankstyle.css">
 </head>
 <body>
+<div class="navbar"></div>
+<div class="content">
 <h1>Operation was a success!</h1>
-<a href="accountActions.jsp">Back to menu</a>
+<a href="accountActions">Back to menu</a>
+</div>
 </body>
 </html>

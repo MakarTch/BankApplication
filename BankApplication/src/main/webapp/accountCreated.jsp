@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>5 Recent Transactions</title>
+<title>Account Created</title>
 <link rel="stylesheet" href="bankstyle.css">
 </head>
 <body>
 <div class="navbar"></div>
 <div class="content">
-<h1>5 most recent transactions</h1>
-${obj.displayTransactions(user)}
+Your account has been created! Sign into the application <a href="login.jsp">here</a>.<br>
+Your User Id is ${user.getUserId()} and password is ${user.getPassword()}. Please remember these!
 </div>
 </body>
 </html>

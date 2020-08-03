@@ -5,9 +5,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Error Login</title>
+<link rel="stylesheet" href="bankstyle.css">
 </head>
 <body>
-<h1> Log in again! The username or password were incorrect!</h1>
+<div class="navbar"></div>
+<div class="content">
+<h1 > Please log in again! The username or password were incorrect.</h1>
 <form action="verifyAccount">
 <label for="user_id">User ID</label>
 <input type="number" name="user_id" autocomplete="off"><br>
@@ -15,6 +18,6 @@
 <input type="password" name="password">
 <input type="submit" value="submit!">
 </form>
-
+</div>
 </body>
 </html>

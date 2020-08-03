@@ -53,6 +53,27 @@ public class UserDAOClass {
 		}
 		return null;	
 	}
+	public static User getUserByContactNumber(String contactNumber) throws IOException {
+	    try {
+	    	Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
+	        Statement stmt = con.createStatement();
+	        ResultSet rs = stmt.executeQuery("SELECT * FROM Users where contact_number = " + contactNumber);
+	        while(rs.next()){
+		        User u = new User (rs.getInt("user_id"), rs.getString("last_name"),rs.getString("first_name"), rs.getString("address"), rs.getString("contact_number"), rs.getString("user_password"), rs.getInt("initial_deposit"));
+  			    return u;
+	        }
+	        stmt.close();
+	        con.close();
+	        User user = new User();
+	        return user;
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
 
 	public static boolean verification(int userId, String password) throws IOException {
 		String realPassword = getUserById(userId).getPassword();
@@ -62,13 +83,7 @@ public class UserDAOClass {
 		return false;
 	}
 	
-	
-//	public static void displayAll() throws IOException {
-//		System.out.println("header");
-//		for (Users p: getAllUsers()) {
-//			System.out.println(p.toString());
-//		}		
-//	}
+
 
 
 

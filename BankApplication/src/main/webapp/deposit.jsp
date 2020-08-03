@@ -5,8 +5,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Deposit Information</title>
+<link rel="stylesheet" href="bankstyle.css">
 </head>
 <body>
+<div class="navbar"></div>
+<div class="content">
 <form action="depositAction">
 <label for="account">What account would you like to deposit into?</label>
 <select name="account" id="account">
@@ -17,5 +20,6 @@
 <input type="number" name="deposit" id="deposit" autocomplete ="off">
 <input type="submit">
 </form>
+</div>
 </body>
 </html>

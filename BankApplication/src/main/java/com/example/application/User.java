@@ -1,6 +1,11 @@
 package com.example.application;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 public class User {
 
 	private int userId;
@@ -93,9 +98,35 @@ public class User {
 	public String displayUser(int userId) throws IOException {
 		String finalString="";
 		User user = UserDAOClass.getUserById(userId);
-		finalString += "<table border=1 style=\"border-collapse:collapse\"> <tr><th>User ID</th><th>Last Name</th><th>First Name</th><th>Address</th><th>Phone Number</th><th>Password</th><th>Initial Deposit</th></tr>";
+		finalString += "<table> <tr><th>User ID</th><th>Last Name</th><th>First Name</th><th>Address</th><th>Phone Number</th><th>Password</th><th>Initial Deposit</th></tr>";
 		finalString += user.toString() + "</table>";
 		return finalString;
+	}
+	
+	public static boolean createUser(User user) {
+		try {
+	    	Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
+	        PreparedStatement stmt = con.prepareStatement("insert into users(last_name,first_name,address,contact_number,user_password,initial_deposit)"
+					+ " values(?,?,?,?,?,?)");
+	        stmt.setString(1, user.lastName);
+	        stmt.setString(2, user.firstName);
+	        stmt.setString(3, user.address);
+	        stmt.setString(4, user.contactNumber);
+	        stmt.setString(5, user.password);
+	        stmt.setInt(6, user.initialDeposit);
+			int rs = stmt.executeUpdate();
+	        stmt.close();
+	        con.close();
+	        if (rs==1) {
+	        	return true;
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 }

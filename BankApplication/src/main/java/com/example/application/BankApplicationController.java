@@ -22,25 +22,43 @@ public class BankApplicationController {
 		return "login.jsp";
 	}	
 	
+	@GetMapping("/loggingOff")
+	public String login(HttpSession session) {
+		session.setAttribute("user", null);
+		return "home.jsp";
+	}
+	
 	@GetMapping("/createAccount")
 	public String createAccount() {
 		return "createAccount.jsp";
 	}
 	
 	@GetMapping("/accountCreated")
-	public String accountCreated() {
-		//insert a bunch of methods here
-		//insert into user
-		//insert into account
-		//insert into transactions
-		//jeez I totally forgot to insert transactions for every thing I do
-		return "accountCreated.jsp";
+	public ModelAndView accountCreated(User user) throws IOException {
+		ModelAndView mv = new ModelAndView();
+		boolean success1 = User.createUser(user);
+		user = UserDAOClass.getUserByContactNumber(user.getContactNumber());
+		boolean success2 = Account.createAccount(user);
+		boolean success3 = Transaction.initialDeposit(user);
+		if (success1 && success2 && success3) {
+			mv.setViewName("accountCreated.jsp");
+			mv.addObject(user);
+			return mv;
+		}
+		mv.setViewName("error.jsp");
+		return mv;
 	}
 	
+	@GetMapping("/accountActions")
+	public String accountActions() {
+		return "accountActions.jsp";
+	}
+	
+	
 	@GetMapping("/verifyAccount")
-	public String accountActions(@RequestParam int user_id, @RequestParam String password, HttpSession session) throws IOException {
-		if(UserDAOClass.verification(user_id, password) == true) {
-			session.setAttribute("user", user_id);
+	public String accountActions(@RequestParam int userId, @RequestParam String password, HttpSession session) throws IOException {
+		if(UserDAOClass.verification(userId, password) == true) {
+			session.setAttribute("user", userId);
 			return "accountActions.jsp";
 		}
 		return "errorLogin.jsp";
@@ -78,7 +96,7 @@ public class BankApplicationController {
 	@GetMapping("/depositAction")
 	public String depositAction(HttpSession session, @RequestParam String account, @RequestParam int deposit) {
 		Object user = session.getAttribute("user");
-		boolean success = Account.deposit(user,account,deposit);
+		boolean success = Account.deposit(user,account,deposit, false);
 		if (success) {
 			return "success.jsp";
 		}
@@ -93,7 +111,7 @@ public class BankApplicationController {
 	@GetMapping("/withdrawAction")
 	public String withdrawAction(HttpSession session, @RequestParam String account, @RequestParam int withdraw) {
 		Object user = session.getAttribute("user");
-		boolean success = Account.withdraw(user,account,withdraw);
+		boolean success = Account.withdraw(user,account,withdraw, false);
 		if (success) {
 			return "success.jsp";
 		}
@@ -115,5 +133,6 @@ public class BankApplicationController {
 	}
 }
 
-///block password from showing in url
-
+//block password from showing in url
+//add dollar signs to the table views
+//Change all ids so that theyre like 101, 1001, you know
