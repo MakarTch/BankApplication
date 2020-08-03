@@ -4,12 +4,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Create Account</title>
+<title>Success</title>
 </head>
 <body>
-<form action="accountCreated">
-
-
-</form>
+<h1>Operation was a success!</h1>
+<a href="accountActions.jsp">Back to menu</a>
 </body>
 </html>

@@ -27,6 +27,16 @@ public class BankApplicationController {
 		return "createAccount.jsp";
 	}
 	
+	@GetMapping("/accountCreated")
+	public String accountCreated() {
+		//insert a bunch of methods here
+		//insert into user
+		//insert into account
+		//insert into transactions
+		//jeez I totally forgot to insert transactions for every thing I do
+		return "accountCreated.jsp";
+	}
+	
 	@GetMapping("/verifyAccount")
 	public String accountActions(@RequestParam int user_id, @RequestParam String password, HttpSession session) throws IOException {
 		if(UserDAOClass.verification(user_id, password) == true) {
@@ -61,21 +71,49 @@ public class BankApplicationController {
 	}
 	
 	@GetMapping("/deposit")
-	public ModelAndView deposit(HttpSession session) {
-		ModelAndView mv = new ModelAndView("deposit.jsp");
-		
-		return mv;
-	}
-	@GetMapping("/depositAction")
-	public String depositAction(HttpSession session, @RequestParam String account, @RequestParam int deposit) {
-		System.out.println(account + deposit);
-		Account a = new Account();
-		a.deposit(account,deposit);
-		return "displayAccounts.jsp";
+	public String deposit(HttpSession session) {
+		return "deposit.jsp";
 	}
 	
-
+	@GetMapping("/depositAction")
+	public String depositAction(HttpSession session, @RequestParam String account, @RequestParam int deposit) {
+		Object user = session.getAttribute("user");
+		boolean success = Account.deposit(user,account,deposit);
+		if (success) {
+			return "success.jsp";
+		}
+		return "error.jsp";
+	}
+	
+	@GetMapping("/withdraw")
+	public String withdraw() {
+		return "withdraw.jsp";
+	}
+	
+	@GetMapping("/withdrawAction")
+	public String withdrawAction(HttpSession session, @RequestParam String account, @RequestParam int withdraw) {
+		Object user = session.getAttribute("user");
+		boolean success = Account.withdraw(user,account,withdraw);
+		if (success) {
+			return "success.jsp";
+		}
+		return "error.jsp";
+	}
+	@GetMapping("/transfer")
+	public String transfer() {
+		return "transfer.jsp";
+	}
+	
+	@GetMapping("/transferAction")
+	public String transferAction(HttpSession session, @RequestParam int amount, @RequestParam String accountTo ) {
+		Object userId = session.getAttribute("user");
+		boolean success = Account.transfer(userId, amount, accountTo);
+		if (success) {
+			return "success.jsp";
+		}
+		return "error.jsp";
+	}
 }
 
-
+///block password from showing in url
 

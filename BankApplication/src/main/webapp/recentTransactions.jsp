@@ -8,7 +8,6 @@
 </head>
 <body>
 <h1>5 recent transactions</h1>
-${user} is the user <br>
 ${obj.displayTransactions(user)}
 
 </body>

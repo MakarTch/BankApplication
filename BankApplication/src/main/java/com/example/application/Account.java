@@ -73,23 +73,52 @@ public class Account {
 		return finalDisplay;
 	}
 
-	public void deposit(String account, int deposit) {
-		// and here is gonna be my method for updating the mysql data, gonna be same shit with withdraw
+	public static boolean deposit(Object userId, String account, int deposit) {
+		boolean success = false;
 		try {
 	    	Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
 	        Statement stmt = con.createStatement();
-	        //ResultSet rs = stmt.executeUpdate("update accounts set account value = " /*gotta input past value*/ );
-	        
+	        int accountValue = deposit + AccountDAOClass.getPastBalance((int)userId, account);
+	        int rs = stmt.executeUpdate("update accounts set account_value=" + accountValue + " where user_id = "  +userId+" and account_type='"+account+"'");
 	        stmt.close();
 	        con.close();
-	        User user = new User();
+	        success = (rs==1) ? true : false;
 	    } catch (SQLException ex) {
 	        ex.printStackTrace();
 	    } catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+		return success;
 	}
+	
+	public static boolean withdraw(Object userId, String account, int withdrawal) {
+		boolean success = false;
+		try {
+	    	Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
+	        Statement stmt = con.createStatement();
+	        int accountValue = AccountDAOClass.getPastBalance((int)userId, account) - withdrawal ;
+	        int rs = stmt.executeUpdate("update accounts set account_value=" + accountValue + " where user_id = "  +userId+" and account_type='"+account+"'");
+	        stmt.close();
+	        con.close();
+	        success = (rs==1) ? true : false;
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
+	
+	public static boolean transfer(Object userId, int amount, String accountTo) {
+		boolean success = false;
+		String accountFrom = accountTo.equals("Savings") ? "Checkings" : "Savings";
+		boolean success1 = withdraw(userId,accountFrom, amount);
+		boolean success2 = deposit(userId,accountTo, amount);
+		success = (success1==true && success2 == true) ? true : false;
+		return success;
+	}
+	
 	
 }

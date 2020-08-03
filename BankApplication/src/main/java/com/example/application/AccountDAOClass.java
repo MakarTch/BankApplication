@@ -31,4 +31,31 @@ public class AccountDAOClass {
 		}
 		return null;
 	}
+	
+	public static Account getAccountsByIdAndAccount(int userId, String account){
+		try {
+			Account desiredAccount = null;
+	    	Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
+	        Statement stmt = con.createStatement();
+	        ResultSet rs = stmt.executeQuery("SELECT * FROM accounts where user_id = " + userId + " and account_type ='" +account + "'");
+	        while(rs.next()){
+		        desiredAccount = new Account (rs.getInt("account_id"), rs.getInt("user_id"),rs.getString("account_type"), rs.getInt("account_value"));
+	        }
+	        stmt.close();
+	        con.close();
+	        return desiredAccount;
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static int getPastBalance(int userId, String account) {
+		Account depositAccount = getAccountsByIdAndAccount(userId, account);
+		int pastBalance = depositAccount.getAccountValue();
+		return pastBalance;
+	}
 }

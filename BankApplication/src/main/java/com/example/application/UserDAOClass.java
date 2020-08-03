@@ -63,23 +63,6 @@ public class UserDAOClass {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 //	public static void displayAll() throws IOException {
 //		System.out.println("header");
 //		for (Users p: getAllUsers()) {
