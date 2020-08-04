@@ -8,7 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.persistence.Entity;
+
 import com.example.utility.UserDAOClass;
+
+@Entity
 public class User {
 
 	private int userId;

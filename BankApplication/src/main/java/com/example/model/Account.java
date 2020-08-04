@@ -10,8 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+
 import com.example.utility.AccountDAOClass;
 
+@Entity
 public class Account {
 	
 	private int accountId;

@@ -60,10 +60,10 @@ public class UserDAOClass {
 	    	Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
 	        Statement stmt = con.createStatement();
-	        ResultSet rs = stmt.executeQuery("SELECT * FROM Users where contact_number = " + contactNumber);
+	        ResultSet rs = stmt.executeQuery("SELECT * FROM Users where contact_number = '" + contactNumber + "'");
 	        while(rs.next()){
 		        User u = new User (rs.getInt("user_id"), rs.getString("last_name"),rs.getString("first_name"), rs.getString("address"), rs.getString("contact_number"), rs.getString("user_password"), rs.getInt("initial_deposit"));
-  			    return u;
+		        return u;
 	        }
 	        stmt.close();
 	        con.close();

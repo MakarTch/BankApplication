@@ -150,3 +150,4 @@ public class BankApplicationController {
 //block password from showing in url
 //add javascript somehow
 //make this public 
+//add js for password visibility

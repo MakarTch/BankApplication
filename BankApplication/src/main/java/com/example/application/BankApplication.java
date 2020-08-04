@@ -20,10 +20,6 @@ public class BankApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(BankApplication.class, args);
 		
-//		UsersDAOClass.displayAll();
-//		System.out.println("Test34234");
-//		System.out.println(UsersDAOClass.verification(1, "password"));
-		
 	}
 }
 	

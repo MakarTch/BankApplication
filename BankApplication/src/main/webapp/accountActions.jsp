@@ -10,7 +10,7 @@
 <body>
 <div class="navbar"></div>
 <div class="content">
-<h1> Hello ${obj.getUserById(userId).getFirstName()}, What would you like to do?</h1>
+<h1> Hello ${obj.getUserById(userId).getFirstName()}, what would you like to do?</h1>
 <a href = "deposit">Make a deposit</a><br>
 <a href = "withdraw">Make a withdrawal</a><br>
 <a href = "transfer">Transfer funds between accounts</a><br>
