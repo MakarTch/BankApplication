@@ -1,11 +1,14 @@
-package com.example.application;
+package com.example.model;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.example.utility.UserDAOClass;
 public class User {
 
 	private int userId;
@@ -91,7 +94,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "<tr><td>" + userId + "</td><td>" + lastName + "</td><td>" + firstName + "</td><td>"
-				+ address + "</td><td>" + contactNumber + "</td><td>" + password + "</td><td>"
+				+ address + "</td><td>" + contactNumber + "</td><td>" + password + "</td><td>$"
 				+ initialDeposit + "</td></tr>";
 	}
 	
@@ -127,6 +130,28 @@ public class User {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public User getUserById(int userId) throws IOException {
+	    try {
+	    	Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
+	        Statement stmt = con.createStatement();
+	        ResultSet rs = stmt.executeQuery("SELECT * FROM Users where user_id = " + userId);
+	        while(rs.next()){
+		        User u = new User (rs.getInt("user_id"), rs.getString("last_name"),rs.getString("first_name"), rs.getString("address"), rs.getString("contact_number"), rs.getString("user_password"), rs.getInt("initial_deposit"));
+  			    return u;
+	        }
+	        stmt.close();
+	        con.close();
+	        User user = new User();
+	        return user;
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 	
 }

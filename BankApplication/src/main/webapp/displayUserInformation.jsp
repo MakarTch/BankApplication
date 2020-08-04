@@ -11,7 +11,8 @@
 <div class="navbar"></div>
 <div class="content">
 <h1>User Information</h1>
-${obj.displayUser(user)}
+${obj.displayUser(user)}<br>
+<a href="accountActions">Back to menu</a>
 </div>
 </body>
 </html>

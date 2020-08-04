@@ -12,7 +12,8 @@
 <div class="content">
 <h1>Account Information</h1>
 <p> Two accounts (Savings and Checkings)  are automatically generated when you create an account.<br> Your initial deposit goes into your Savings Account.</p>
-${obj.displayAccounts(user) }
+${obj.displayAccounts(user) }<br>
+<a href="accountActions">Back to menu</a>
 </div>
 </body>
 </html>

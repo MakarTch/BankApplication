@@ -11,7 +11,8 @@
 <div class="navbar"></div>
 <div class="content">
 <h1>Operation was a success!</h1>
-<a href="accountActions">Back to menu</a>
+<a href="accountActions">Back to menu</a><br>
+<a href="displayAccounts">Show account information</a>
 </div>
 </body>
 </html>

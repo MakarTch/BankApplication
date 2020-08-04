@@ -1,11 +1,15 @@
-package com.example.application;
+package com.example.model;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import com.example.utility.TransactionDAOClass;
 
 public class Transaction {
 	
@@ -70,7 +74,10 @@ public class Transaction {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
 	        PreparedStatement stmt = con.prepareStatement("insert into transactions(user_id, transaction_description) values(?,?)");
 	        stmt.setInt(1, user.getUserId());
-	        stmt.setString(2, "Initial Deposit: $" + user.getInitialDeposit() + " deposited into Checkings Account");
+	        Date date = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm z");  
+		    String strDate = formatter.format(date);  
+	        stmt.setString(2, "Initial Deposit: $" + user.getInitialDeposit() + " deposited into Checkings Account on " + strDate );
 			int rs = stmt.executeUpdate();
 	        stmt.close();
 	        con.close();

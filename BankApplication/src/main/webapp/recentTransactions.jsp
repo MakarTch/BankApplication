@@ -11,7 +11,8 @@
 <div class="navbar"></div>
 <div class="content">
 <h1>5 most recent transactions</h1>
-${obj.displayTransactions(user)}
+${obj.displayTransactions(user)}<br>
+<a href="accountActions">Back to menu</a>
 </div>
 </body>
 </html>

@@ -12,8 +12,8 @@
 <div class="content">
 <h1 > Please log in again! The username or password were incorrect.</h1>
 <form action="verifyAccount">
-<label for="user_id">User ID</label>
-<input type="number" name="user_id" autocomplete="off"><br>
+<label for="userId">User ID</label>
+<input type="number" name="userId" autocomplete="off"><br>
 <label for="password">Password</label>
 <input type="password" name="password">
 <input type="submit" value="submit!">

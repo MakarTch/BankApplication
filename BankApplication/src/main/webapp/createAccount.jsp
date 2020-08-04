@@ -14,17 +14,17 @@
 <p>Please enter your new account information:
 <form action="accountCreated">
 <label for="lastName">Last Name</label>
-<input type="text" name="lastName"><br>
-<label for="firstName">FirstName</label>
-<input type="text" name="firstName"><br>
+<input type="text" name="lastName" autocomplete ="off" required><br>
+<label for="firstName">First Name</label>
+<input type="text" name="firstName" autocomplete ="off" required><br>
 <label for="address">Address</label>
-<input type="text" name="address"><br>
+<input type="text" name="address" autocomplete ="off" required><br>
 <label for="contactNumber">Contact Number</label>
-<input type="text" name="contactNumber"><br>
+<input type="text" name="contactNumber" autocomplete ="off" required><br>
 <label for="password">Password</label>
-<input type="password" name="password"><br>
+<input type="password" name="password" autocomplete ="off" required><br>
 <label for="initialDeposit">Initial Deposit</label>
-<input type="number" name="initialDeposit"><br>
+<input type="number" name="initialDeposit" autocomplete ="off" required><br>
 <input type="submit">
 </form>
 </div>

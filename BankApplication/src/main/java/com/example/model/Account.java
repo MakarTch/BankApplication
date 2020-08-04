@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import com.example.utility.AccountDAOClass;
 
 public class Account {
 	
@@ -61,7 +65,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "<tr><td>" + accountId + "</td><td>" + userId + "</td><td>" + accountType + "</td><td>" + accountValue + "</td></tr>";
+		return "<tr><td>" + accountId + "</td><td>" + userId + "</td><td>" + accountType + "</td><td>$" + accountValue + "</td></tr>";
 	}
 	
 	public String displayAccounts(int userId) {
@@ -76,16 +80,19 @@ public class Account {
 
 	public static void insertIntoTransactions(Object userId, String operation, String accountTo, int amount) {
 		String transactionDescription = "";
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm z");  
+	    String strDate = formatter.format(date); 
 		switch (operation) {
 			case ("deposit"):
-				transactionDescription = "Deposit: $" + amount + " into " + accountTo + " account";
+				transactionDescription = "Deposit: $" + amount + " into " + accountTo + " account on " + strDate;
 				break;
 			case ("withdraw"):
-				transactionDescription = "Withdrawal: $" + amount + " from " + accountTo + " account";
+				transactionDescription = "Withdrawal: $" + amount + " from " + accountTo + " account on " + strDate;
 				break;
 			case ("transfer"):
 				String accountFrom = (accountTo.equals("Savings") ? "Checkings" : "Savings");
-				transactionDescription = "Transfer: $" + amount + " from " + accountFrom + " into " + accountTo;
+				transactionDescription = "Transfer: $" + amount + " from " + accountFrom + " into " + accountTo + " on " + strDate;
 				break;
 		}
 		
@@ -109,10 +116,6 @@ public class Account {
 	    	Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb", "root", "root");
 	        Statement stmt = con.createStatement();
-//	        System.out.println(deposit + " is deposit");
-//	        System.out.println((int)userId+ " is userid");
-//	        System.out.println(account+ " is account");
-//	        System.out.println(AccountDAOClass.getPastBalance((int)userId, account)+ "is the method");
 	        int accountValue = deposit + AccountDAOClass.getPastBalance((int)userId, account);
 	        int rs = stmt.executeUpdate("update accounts set account_value=" + accountValue + " where user_id = "  +userId+" and account_type='"+account+"'");
 	        stmt.close();

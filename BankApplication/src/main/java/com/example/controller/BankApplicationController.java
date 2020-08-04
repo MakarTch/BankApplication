@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.controller;
 
 import java.io.IOException;
 
@@ -8,6 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.model.Account;
+import com.example.model.Transaction;
+import com.example.model.User;
+import com.example.utility.UserDAOClass;
 
 @Controller
 public class BankApplicationController {
@@ -50,18 +55,27 @@ public class BankApplicationController {
 	}
 	
 	@GetMapping("/accountActions")
-	public String accountActions() {
-		return "accountActions.jsp";
+	public ModelAndView accountActions(HttpSession session) {
+		int userId = (int) session.getAttribute("user");
+		ModelAndView mv = new ModelAndView("accountActions.jsp");
+		mv.addObject("userId", userId);
+		mv.addObject("obj", new User());
+		return mv;
 	}
 	
 	
 	@GetMapping("/verifyAccount")
-	public String accountActions(@RequestParam int userId, @RequestParam String password, HttpSession session) throws IOException {
+	public ModelAndView accountActions(@RequestParam int userId, @RequestParam String password, HttpSession session) throws IOException {
+		ModelAndView mv = new ModelAndView();
 		if(UserDAOClass.verification(userId, password) == true) {
 			session.setAttribute("user", userId);
-			return "accountActions.jsp";
+			mv.setViewName("accountActions.jsp");
+			mv.addObject("userId", userId);
+			mv.addObject("obj", new User());
+			return mv;
 		}
-		return "errorLogin.jsp";
+		mv.setViewName("errorLogin.jsp");
+		return mv;
 	}
 	
 	@GetMapping("/recentTransactions")
@@ -74,9 +88,9 @@ public class BankApplicationController {
 	
 	@GetMapping("/displayUserInformation")
 	public ModelAndView displayUserInformation(HttpSession session) {
-		ModelAndView mv = new ModelAndView("displayUserInformation.jsp");
-		mv.addObject("obj", new User());
+		ModelAndView mv = new ModelAndView("displayUserInformation.jsp");		
 		mv.addObject("user", session.getAttribute("user"));
+		mv.addObject("obj", new User());
 		return mv;
 	}
 	
@@ -134,5 +148,5 @@ public class BankApplicationController {
 }
 
 //block password from showing in url
-//add dollar signs to the table views
-//Change all ids so that theyre like 101, 1001, you know
+//add javascript somehow
+//make this public 
