@@ -148,6 +148,6 @@ public class BankApplicationController {
 }
 
 //block password from showing in url
-//add javascript somehow
-//make this public 
-//add js for password visibility
+//play with js in createAccount.jsp
+//add js for password visibility in displayUserInfo
+//add js for phone number verification do I really have to do this, na I don't

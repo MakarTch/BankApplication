@@ -143,7 +143,8 @@ public class User {
 	        Statement stmt = con.createStatement();
 	        ResultSet rs = stmt.executeQuery("SELECT * FROM Users where user_id = " + userId);
 	        while(rs.next()){
-		        User u = new User (rs.getInt("user_id"), rs.getString("last_name"),rs.getString("first_name"), rs.getString("address"), rs.getString("contact_number"), rs.getString("user_password"), rs.getInt("initial_deposit"));
+		        User u = new User (rs.getInt("user_id"), rs.getString("last_name"),rs.getString("first_name"), 
+		        		rs.getString("address"), rs.getString("contact_number"), rs.getString("user_password"), rs.getInt("initial_deposit"));
   			    return u;
 	        }
 	        stmt.close();
@@ -157,5 +158,4 @@ public class User {
 		}
 		return null;	
 	}
-	
 }
